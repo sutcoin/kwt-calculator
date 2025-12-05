@@ -71,20 +71,30 @@
       text-align: center;
       line-height: 1.6;
     }
+
+    .popup-button button {
+      background-color: #29b6f6;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>KWT 전환 계산기</h2>
 
-    <label for="total">필요한 KWT 개수</label>
+    <label for="total">필요한 KWT 개수 (매수자 입력)</label>
     <input type="number" id="total" placeholder="예: 440000">
 
-    <label for="discount">SUT 유동성 공급가</label>
+    <label for="discount">SUT 유동성 공급가 (어플내 확인)</label>
     <input type="number" id="discount" placeholder="예: 22000">
 
     <label for="sutPrice">고팍스 DST 현재가 (₩)</label>
     <input type="number" id="sutPrice" placeholder="예: 4000">
+
+    <!-- 고팍스 DST 시세 팝업 버튼 복구 -->
+    <div class="popup-button">
+      <button onclick="openPopup()">🌐 고팍스 DST 시세 보기</button>
+    </div>
 
     <button onclick="calculateAssets()">매수, 매도 자산 계산</button>
 
@@ -107,12 +117,20 @@
       // 매수자 계산 공식
       const buyerAmount = (total / liquidity) * dstPrice;
 
-      // 매도자 = 필요한 KWT 개수 그대로
+      // 매도자: KWT 그대로
       const sellerAmount = total;
 
       resultElement.innerHTML =
         `매수자 = ${buyerAmount.toLocaleString()} 원 전송<br>` +
         `매도자 = ${sellerAmount.toLocaleString()} KWT 전송`;
+    }
+
+    function openPopup() {
+      window.open(
+        "https://www.gopax.co.kr/exchange?market=dst-krw",
+        "popupWindow",
+        "width=1024,height=800,scrollbars=yes"
+      );
     }
   </script>
 </body>
